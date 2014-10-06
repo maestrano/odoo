@@ -99,7 +99,7 @@ class MnoSsoUser(MnoSsoBaseUser):
     # If the user is the owner of the app or at least Admin
     # for each organization,
     def getGroupIdsToAssign(self):
-        default_user_roles = None;
+        default_user_roles = [5];
         default_admin_roles = [3,4,5]
         role_ids = default_user_roles #basic user
         
