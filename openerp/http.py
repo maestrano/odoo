@@ -42,7 +42,7 @@ from openerp import SUPERUSER_ID
 from openerp.service import security, model as service_model
 from openerp.tools.func import lazy_property
 
-MAESTRANO_ROOT = os.path.abspath(inspect.getfile(inspect.currentframe()) + '/../../../../maestrano/')
+MAESTRANO_ROOT = os.path.abspath(inspect.getfile(inspect.currentframe()) + '/../../maestrano/')
 
 # Load context
 execfile(MAESTRANO_ROOT + '/app/init/base.py')
@@ -910,7 +910,7 @@ class OpenERPSession(werkzeug.contrib.sessions.Session):
             raise SessionExpiredException("Session expired")
         
         # check maestrano session is still valid
-        if maestrano.isSsoEnabled() 
+        if maestrano.isSsoEnabled():
             if maestrano.getSsoSession().isValid():
                 return True
             else:
