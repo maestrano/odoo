@@ -1,0 +1,8 @@
+<openerp>
+    <data>
+      <!-- Auto login user -->
+      <template id="web.login" name="Login">
+          <script type="text/javascript">window.location.href="/maestrano/auth/saml/index"</script>
+      </template>
+    </data>
+</openerp>

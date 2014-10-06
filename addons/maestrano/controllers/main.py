@@ -33,6 +33,7 @@ import inspect
 
 import openerp
 from openerp import SUPERUSER_ID
+from openerp.addons.web import http
 from openerp.modules.registry import RegistryManager
 from openerp.addons.web.controllers.main import login_and_redirect, set_cookie_and_redirect
 
@@ -47,12 +48,13 @@ from MnoSsoUser import MnoSsoUser
 
 _logger = logging.getLogger(__name__)
 
-class Maestrano(openerp.addons.web.http.Controller):
+class Maestrano(http.Controller):
     _cp_path = '/maestrano/auth/saml'
 
     #_store = filestore.FileOpenIDStore(_storedir)
     
-    @openerp.addons.web.http.httprequest
+    #@openerp.addons.web.http.httprequest
+    #@http.route('/web/webclient/qweb', type='http', auth="none")
     def logout(self, req, **kw):
         # Get Maestrano instance and build redirect url
         maestrano = MaestranoService.getInstance()
@@ -62,7 +64,8 @@ class Maestrano(openerp.addons.web.http.Controller):
         
         return redirect
     
-    @openerp.addons.web.http.httprequest
+    #@openerp.addons.web.http.httprequest
+    @http.route('/maestrano/auth/saml/index', type='http', auth="none")
     def index(self, req, **kw):
         # Get Maestrano instance and build redirect url
         maestrano = MaestranoService.getInstance()
@@ -74,7 +77,7 @@ class Maestrano(openerp.addons.web.http.Controller):
         return redirect
 
     
-    @openerp.addons.web.http.httprequest
+    @http.route('/maestrano/auth/saml/consume', type='http', auth="none")
     def consume(self, req, **kw):
         # Get Maestrano Service
         maestrano = MaestranoService.getInstance()
