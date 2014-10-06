@@ -123,7 +123,7 @@ class Maestrano(http.Controller):
             if sso_user.local_id is not None:
                 sso_user.signIn()
                 # Redirect to application
-                redirect = set_cookie_and_redirect(req,maestrano.getAfterSsoSignInPath())
+                redirect = set_cookie_and_redirect(maestrano.getAfterSsoSignInPath())
         
             else:
                 # Redirect to 'access denied' page

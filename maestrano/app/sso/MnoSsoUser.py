@@ -27,12 +27,14 @@ class MnoSsoUser(MnoSsoBaseUser):
     def __init__(self, saml_response, session=[], opts=[]):
         super(MnoSsoUser,self).__init__(saml_response,session)
         
-        dbname = 'openerp'
+        dbname = 'odoo'
         self.connection = RegistryManager.get(dbname)
         
         # Get Users service and extend it
         self.Users = self.connection.get('res.users')
-        self.Users._columns['mno_uid'] = openerp.osv.fields.char()
+        col = openerp.osv.fields.char('MnoUid')
+        self.Users._columns['mno_uid'] = col
+        self.Users._add_field('mno_uid', col.to_field())
         self.Users._all_columns['mno_uid'] = openerp.osv.fields.column_info('mno_uid', openerp.osv.fields.char())
         
         if opts['env']:
@@ -49,7 +51,7 @@ class MnoSsoUser(MnoSsoBaseUser):
                     'password': password
                 })
                 cr.commit()
-                self.session.authenticate('openerp', self.uid, password, self.env)
+                self.session.authenticate('odoo', self.uid, password)
         return True
         
     # Sign the user in the application. By default,
@@ -123,7 +125,7 @@ class MnoSsoUser(MnoSsoBaseUser):
     # Get the ID of a local user via email lookup
     def getLocalIdByEmail(self):
         with self.connection.cursor() as cr:
-            usr_list = self.Users.search(cr, SUPERUSER_ID, [('user_email','=',self.email)],0,1)
+            usr_list = self.Users.search(cr, SUPERUSER_ID, [('email','=',self.email)],0,1)
             if len(usr_list) > 0:
                 return usr_list[0].id
         return None
@@ -144,7 +146,7 @@ class MnoSsoUser(MnoSsoBaseUser):
             with self.connection.cursor() as cr:
                 ret = self.Users.write(cr, SUPERUSER_ID, [self.local_id], {
                     'name': self.name + ' ' + self.surname,
-                    'user_email': self.email,
+                    'email': self.email,
                     'login': self.uid
                 })
                 return ret
