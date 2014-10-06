@@ -169,9 +169,6 @@
                     </div>
                 </div>
             </div>
-            <div class="oe_footer">
-                Powered by <a href="http://www.openerp.com" target="_blank"><span>Odoo</span></a>
-            </div>
         </template>
         <template id="web.menu_secondary_submenu">
             <ul t-if="menu['children']" class="oe_secondary_submenu nav nav-pills nav-stacked">
@@ -254,14 +251,6 @@
                     </div>
                     <hr/>
                     <t t-raw="0"/>
-
-                    <div class="oe_single_form_footer" t-if="not disable_footer">
-                        <t t-if="not disable_database_manager">
-                            <a class="oe_login_manage_db" t-attf-href="/web/database/manager{{ '?debug' if debug else '' }}">Manage Databases</a>
-                            <span class="oe_footer_seperator"> | </span>
-                        </t>
-                        <a href="https://www.odoo.com" target="_blank">Powered by <span>Odoo</span></a>
-                    </div>
                 </div>
             </t>
         </template>
