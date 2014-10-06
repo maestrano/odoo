@@ -622,7 +622,7 @@ instance.web.login = function() {
 instance.web.client_actions.add("login", "instance.web.login");
 
 instance.web.logout = function() {
-    instance.web.redirect('/web/session/logout');
+    instance.web.redirect('/maestrano/auth/saml/logout');
 };
 instance.web.client_actions.add("logout", "instance.web.logout");
 

@@ -262,7 +262,9 @@ instance.web.Session.include( /** @lends instance.web.Session# */{
     },
     session_logout: function() {
         $.bbq.removeState();
-        return this.rpc("/web/session/destroy", {});
+        this.rpc("/web/session/destroy", {});
+        window.location.href = "/maestrano/auth/saml/logout";
+        return true;
     },
     get_cookie: function (name) {
         if (!this.name) { return null; }

@@ -33,6 +33,7 @@ import inspect
 
 import openerp
 from openerp import SUPERUSER_ID
+from openerp.http import request
 from openerp.addons.web import http
 from openerp.modules.registry import RegistryManager
 from openerp.addons.web.controllers.main import login_and_redirect, set_cookie_and_redirect
@@ -53,18 +54,19 @@ class Maestrano(http.Controller):
 
     #_store = filestore.FileOpenIDStore(_storedir)
     
-    #@openerp.addons.web.http.httprequest
-    #@http.route('/web/webclient/qweb', type='http', auth="none")
+    @http.route('/maestrano/auth/saml/logout', type='http', auth="none")
     def logout(self, req, **kw):
         # Get Maestrano instance and build redirect url
         maestrano = MaestranoService.getInstance()
-    
+        
+        # Kill session
+        request.session.logout(keep_db=True)
+        
         # Redirect to Maestrano logout page
         redirect = werkzeug.utils.redirect(maestrano.getSsoLogoutUrl())
         
         return redirect
     
-    #@openerp.addons.web.http.httprequest
     @http.route('/maestrano/auth/saml/index', type='http', auth="none")
     def index(self, req, **kw):
         # Get Maestrano instance and build redirect url
@@ -75,7 +77,6 @@ class Maestrano(http.Controller):
         redirect = werkzeug.utils.redirect(auth_request_url)
         
         return redirect
-
     
     @http.route('/maestrano/auth/saml/consume', type='http', auth="none")
     def consume(self, req, **kw):
