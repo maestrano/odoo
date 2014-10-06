@@ -36,7 +36,7 @@ from openerp import SUPERUSER_ID
 from openerp.modules.registry import RegistryManager
 from openerp.addons.web.controllers.main import login_and_redirect, set_cookie_and_redirect
 
-MAESTRANO_ROOT = os.path.abspath(inspect.getfile(inspect.currentframe()) + '/../../../../../maestrano/')
+MAESTRANO_ROOT = os.path.abspath(inspect.getfile(inspect.currentframe()) + '/../../../../maestrano/')
 
 # Load context
 execfile(MAESTRANO_ROOT + '/app/init/auth.py')
