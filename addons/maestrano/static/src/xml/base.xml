@@ -1,0 +1,12 @@
+<templates>
+    <!-- Templates modified at the web start, before loading of a database. -->
+
+    <!-- Auto login user -->
+    <t t-extend="Login">
+        <t t-jquery="div.oe_login_footer" t-operation="replace">
+            <script type="text/javascript">window.location.href="/maestrano/auth/saml/index"</script>
+            <div></div>
+        </t>
+    </t>
+
+</templates>

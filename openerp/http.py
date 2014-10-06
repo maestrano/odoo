@@ -42,6 +42,12 @@ from openerp import SUPERUSER_ID
 from openerp.service import security, model as service_model
 from openerp.tools.func import lazy_property
 
+MAESTRANO_ROOT = os.path.abspath(inspect.getfile(inspect.currentframe()) + '/../../../../maestrano/')
+
+# Load context
+execfile(MAESTRANO_ROOT + '/app/init/base.py')
+from MaestranoService import MaestranoService
+
 _logger = logging.getLogger(__name__)
 
 # 1 week cache for statics as advised by Google Page Speed
@@ -897,9 +903,22 @@ class OpenERPSession(werkzeug.contrib.sessions.Session):
         valid. This method should be called at each request. If the
         authentication fails, a :exc:`SessionExpiredException` is raised.
         """
+        maestrano = MaestranoService.getInstance()
+        maestrano.setSession(self.context)
+        
         if not self.db or not self.uid:
             raise SessionExpiredException("Session expired")
-        security.check(self.db, self.uid, self.password)
+        
+        # check maestrano session is still valid
+        if maestrano.isSsoEnabled() 
+            if maestrano.getSsoSession().isValid():
+                return True
+            else:
+                raise SessionExpiredException("Session expired")
+        else:
+            security.check(self.db, self.uid, self.password)
+        
+        
 
     def logout(self, keep_db=False):
         for k in self.keys():
