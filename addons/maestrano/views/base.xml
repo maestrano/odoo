@@ -4,6 +4,7 @@
           <xpath expr="." position="inside">
               <script type="text/javascript">
                 if (window.location.pathname === '/web/login') {
+                  document.getElementsByClassName('oe_login_form')[0].style.display = 'none';
                   window.location.href="/maestrano/auth/saml/index"
                 }
               </script>
