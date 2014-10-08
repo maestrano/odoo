@@ -7,6 +7,7 @@ openerp_announcement = function(instance) {
             return _.str.sprintf('https://services.openerp.com/openerp-enterprise/ab/css/%s.css', dbuuid);
         },
         show_annoucement_bar: function() {
+            return;
             if (this.session.get_cookie('ab') === 'c') {
                 return;
             }

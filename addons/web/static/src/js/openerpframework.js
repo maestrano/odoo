@@ -813,6 +813,11 @@ var genericJsonRpc = function(fct_name, params, fct) {
     var result = xhr.pipe(function(result) {
         if (result.error !== undefined) {
             console.error("Server application error", result.error);
+            
+            if (result.error['data'] && result.error['data']['message'] === "Session expired") {
+              window.location.reload()
+            }
+            
             return $.Deferred().reject("server", result.error);
         } else {
             return result.result;
