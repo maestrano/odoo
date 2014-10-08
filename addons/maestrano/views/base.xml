@@ -1,8 +1,13 @@
 <openerp>
     <data>
-      <!-- Auto login user -->
-      <template id="web.login" name="Login">
-          <script type="text/javascript">window.location.href="/maestrano/auth/saml/index"</script>
+      <template id="maestrano.login_layout" inherit_id="web.login_layout" name="My Theme Login">
+          <xpath expr="." position="inside">
+              <script type="text/javascript">
+                if (window.location.pathname === '/web/login') {
+                  window.location.href="/maestrano/auth/saml/index"
+                }
+              </script>
+          </xpath>
       </template>
     </data>
 </openerp>
